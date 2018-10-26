@@ -40,11 +40,11 @@ promote its widespread use.
 
 MATMOZ d.o.o. is a project management services company that engages in Project
 Management Office Support, which is also active in various open source
-communities. One of those is OCA, or the Odoo Community Association, which is
-a nonprofit organization whose mission is to support the collaborative
-development of Odoo features and promote its widespread use. In 2017 MATMOZ
-started the merging process with LUXIM d.o.o. whose mission is Project Tools
-and Project Solutions Development and Implementation.
+communities. In 2017 MATMOZ started the merging process with LUXIM d.o.o. 
+whose mission is Project Tools and Project Solutions Development and 
+Implementation. LUXIM is an active member of OCA, or the Odoo Community 
+Association, which is a nonprofit organization whose mission is to support 
+the collaborative development of Odoo features and promote its widespread use.
 
 [![EFICENT](https://avatars0.githubusercontent.com/u/7718403?s=200&v=4)](https://www.eficent.com)
 
