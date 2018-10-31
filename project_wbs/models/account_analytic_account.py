@@ -36,7 +36,7 @@ class AccountAnalyticAccount(models.Model):
         return result
 
     @api.multi
-    @api.depends('code')
+    @api.depends('code', 'parent_id')
     def _complete_wbs_code_calc(self):
         for account in self:
             data = []
@@ -134,32 +134,73 @@ class AccountAnalyticAccount(models.Model):
         store=True
     )
     project_analytic_id = fields.Many2one(
-        'account.analytic.account',
+        comodel_name='account.analytic.account',
         compute=_get_project_analytic_id,
         string='Root Analytic Account',
         store=True
     )
     user_id = fields.Many2one(
-        'res.users', 'Project Manager', track_visibility='onchange',
-        default=_default_user)
-    manager_id = fields.Many2one('res.users', 'Manager',
-                                 track_visibility='onchange')
+        comodel_name='res.users',
+        string='Project Manager',
+        track_visibility='onchange',
+        default=_default_user
+    )
+    manager_id = fields.Many2one(
+        comodel_name='res.users',
+        string='Manager',
+        track_visibility='onchange'
+    )
     state = fields.Selection(
-        [('template', 'Template'), ('draft', 'New'), ('open', 'In Progress'),
-         ('pending', 'To Renew'), ('close', 'Closed'),
-         ('cancelled', 'Cancelled')], 'Status', default='draft', required=True,
-        track_visibility='onchange')
+        [
+            ('1-template', 'Template'),
+            ('2-draft', 'Draft'),
+            ('3-active', 'Proposal'),
+            ('4-accepted', 'Plan'),
+            ('5-in_progress', 'In Progress'),
+            ('6-closure', 'Closure'),
+            ('7-done', 'Done'),
+            ('91-rejected', 'Rejected'),
+            ('92-withdraw', 'Withdrawn'),
+            ('93-deferred', 'Deferred'),
+        ],
+        string='Status',
+        default='2-draft',
+        required=True,
+        track_visibility='onchange'
+    )
 
     account_class = fields.Selection(
-        [('project', 'Project'), ('phase', 'Phase'),
-         ('deliverable', 'Deliverable'),
-         ('work_package', 'Work Package')], 'Class', default='project',
+        [
+            ('project', 'Project'),
+            ('phase', 'Phase'),
+            ('deliverable', 'Deliverable'),
+            ('work_package', 'Work Package'),
+            ('change', 'Change'),
+            ('risk', 'Risk')
+        ],
+        string='Class',
         help='The classification allows you to create a proper project '
              'Work Breakdown Structure'
     )
-    parent_id = fields.Many2one(default=_default_parent,
-                                string="Parent Analytic Account")
-    partner_id = fields.Many2one(default=_default_partner)
+    parent_id = fields.Many2one(
+        default=_default_parent,
+        string="Parent Analytic Account"
+    )
+    partner_id = fields.Many2one(
+        default=_default_partner
+    )
+
+    """
+    Cosmetic fields for a less cluttered kanban
+    """
+    parent_short_name = fields.Char(
+        related='parent_id.name',
+        readonly=True
+    )
+    parent_code = fields.Char(
+        related='parent_id.complete_wbs_code',
+        readonly=True
+    )
 
     @api.multi
     @api.depends('code')
@@ -200,3 +241,9 @@ class AccountAnalyticAccount(models.Model):
 
             res.append((account.id, data))
         return res
+
+    @api.multi
+    @api.onchange('parent_id')
+    def on_change_parent(self):
+        self._complete_wbs_code_calc()
+        self._complete_wbs_name_calc()
