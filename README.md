@@ -18,6 +18,11 @@ Planning workflow as per PMBOK and ISO 21500.
 The target is to be able to manage projects with different methodologies
 as a hybrid (waterfall, iterative, agile) framework.
 
+# MAIN CONCEPT
+Picture will be updated as the concept developes:
+![Concept](https://cloud.luxim.si/index.php/apps/files_sharing/ajax/publicpreview.php?x=1920&y=587&a=true&file=IDEA-MANAGEMENT.png&t=aw7S4PGZmRzqJSn&scalingup=0)
+
+
 Maintainer
 ----------
 
