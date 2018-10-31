@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+<!-- state change-related subtypes for messaging / Chatter / STATUS -->
+    <record id="mt_change_2-draft" model="mail.message.subtype">
+        <field name="name">Project in Draft</field>
+        <field name="res_model">project.project</field>
+        <field name="default" eval="False"/>
+        <field name="description">Project back in Draft</field>
+    </record>
+    <record id="mt_change_3-active" model="mail.message.subtype">
+        <field name="name">Project Confirmed</field>
+        <field name="res_model">project.project</field>
+        <field name="default" eval="False"/>
+        <field name="description">Project Confirmed</field>
+    </record>
+    <record id="mt_change_4-accepted" model="mail.message.subtype">
+        <field name="name">Project Approved</field>
+        <field name="res_model">project.project</field>
+        <field name="default" eval="False"/>
+        <field name="description">Project Approved</field>
+    </record>
+    <record id="mt_change_5-in_progress" model="mail.message.subtype">
+        <field name="name">Project In Progress</field>
+        <field name="res_model">project.project</field>
+        <field name="default" eval="False"/>
+        <field name="description">Project In Progress</field>
+    </record>
+    <record id="mt_change_6-closure" model="mail.message.subtype">
+        <field name="name">Project In Closure</field>
+        <field name="res_model">project.project</field>
+        <field name="default" eval="False"/>
+        <field name="description">Project In Progress</field>
+    </record>
+    <record id="mt_change_7-done" model="mail.message.subtype">
+        <field name="name">Project Completed</field>
+        <field name="res_model">project.project</field>
+        <field name="default" eval="False"/>
+        <field name="description">Project Completed</field>
+    </record>
+    <record id="mt_change_91-rejected" model="mail.message.subtype">
+        <field name="name">Project Rejected</field>
+        <field name="res_model">project.project</field>
+        <field name="default" eval="False"/>
+        <field name="description">Project Rejected</field>
+    </record>
+    <record id="mt_change_92-withdrawn" model="mail.message.subtype">
+        <field name="name">Project Withdrawn</field>
+        <field name="res_model">project.project</field>
+        <field name="default" eval="False"/>
+        <field name="description">Project Withdrawn</field>
+    </record>
+    <record id="mt_change_93-deferred" model="mail.message.subtype">
+        <field name="name">Project Deferred</field>
+        <field name="res_model">project.project</field>
+        <field name="default" eval="False"/>
+        <field name="description">Project Deferred</field>
+    </record>
+
+</odoo>

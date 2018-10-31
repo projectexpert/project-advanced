@@ -1,0 +1,11 @@
+@charset "utf-8";
+/*© 2018 LUXIM d.o.o. - Matjaž Mozetič*/
+/*License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).*/
+
+.wbs_nav_buttons:hover {
+    background-color: #dac7fb;
+}
+
+.wbselements {
+    font-weight: bolder;
+}
