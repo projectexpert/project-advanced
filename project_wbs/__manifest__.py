@@ -8,9 +8,10 @@
 {
     'name': 'Work Breakdown Structure',
     'version': '10.0.1.0.0',
+    'category': 'Advanced Project Management',
     'license': 'AGPL-3',
-    'author': 'Matmoz d.o.o., '
-              'Luxim d.o.o., '
+    'author': 'Matmoz, '
+              'Luxim, '
               'Deneroteam, '
               'Eficent, '
               'Odoo Community Association (OCA)',
@@ -22,6 +23,8 @@
     ],
     'summary': 'Project Work Breakdown Structure',
     'data': [
+        'data/category_data.xml',
+        'data/project_data.xml',
         'view/account_analytic_account_view.xml',
         'view/project_project_view.xml',
     ],
