@@ -118,13 +118,37 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
         </field>
     </record>
 
+    <!--@TODO: finish the job, this is a first draft-->
+    <!--HIERARCHIC VIEW-->
+    <record id="view_hierarchy" model="ir.ui.view">
+        <field name="name">project.project.hierarchy</field>
+        <field name="model">project.project</field>
+        <field name="priority">30</field>
+        <field name="field_parent">project_child_complete_ids</field>
+        <field name="arch" type="xml">
+            <tree string='WBS elements'>
+                <field name="complete_wbs_code" string="Code"/>
+                <field name="name" string="WBS Name"/>
+                <field name="user_id" string="Responsible"/>
+                <field name="account_class" string="Class"/>
+                <field name="project_child_complete_ids" string="WBS Elements"/>
+                <field name="change_ids"
+                       string="Changes"/>
+                <field name="risk_ids"
+                       string="Risks"/>
+                <field name="task_ids" widget="many2many_tags"/>
+                <field name="state" readonly="1"/>
+            </tree>
+        </field>
+
+    </record>
     <!--TREE VIEW-->
     <record id="view_project" model="ir.ui.view">
         <field name="name">project.project.tree</field>
         <field name="model">project.project</field>
-        <field name="type">tree</field>
+        <!--<field name="type">tree</field>-->
         <field name="inherit_id" ref="project.view_project"/>
-        <field name="field_parent">child_ids</field>
+        <field name="field_parent">project_child_complete_ids</field>
         <field name="arch" type="xml">
             <xpath expr='//tree' position="attributes">
                 <attribute name="editable">top</attribute>
@@ -416,6 +440,9 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
             </xpath>
         </field>
     </record>
+    <!--@TODO: hide the Scope page when state in draft,proposal-->
+    <!--@TODO: custom simplified forms for change and risk-->
+    <!--@TODO: pages in notepad visible by state and/or class-->
     <!--SIMPLIFIED FORM VIEW-->
     <record id="project_project_view_form_simplified" model="ir.ui.view">
         <field name="name">project.project.view.form.simplified</field>
@@ -471,6 +498,22 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
                 projects or invite customers to share your activities.
             </p>
         </field>
+    </record>
+
+    <!--
+    MENU ACTION HIERARCHY
+    called by python def action_open_child_tree_view
+    -->
+    <record id="open_hierarchy" model="ir.actions.act_window">
+        <field name="name">Full WBS</field>
+        <field name="res_model">project.project</field>
+        <field name="view_type">tree</field>
+        <field name="domain">[('account_class', '=', 'project')]</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="project_wbs.view_hierarchy"/>
+        <field name="search_view_id"
+               ref="project.view_project_project_filter"/>
+        <field name="context">{'search_default_current': 1}</field>
     </record>
 
     <!--
@@ -601,6 +644,12 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
               parent="project.menu_projects"
               groups="project.group_project_manager"
               sequence="5"/>
+    <menuitem action="open_hierarchy"
+              id="menu_project_hierarchy"
+              name="Hierarchy"
+              parent="project.menu_projects"
+              groups="project.group_project_manager"
+              sequence="10"/>
 
     <menuitem action="group_changes"
               id="menu_project_changes"
