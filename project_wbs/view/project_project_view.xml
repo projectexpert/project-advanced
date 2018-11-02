@@ -128,15 +128,6 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
         <field name="arch" type="xml">
             <xpath expr='//tree' position="attributes">
                 <attribute name="editable">top</attribute>
-                <attribute name="decoration-info">account_class in
-                    'deliverable, phase'
-                </attribute>
-                <attribute name="decoration-it">account_class ==
-                    'work_package'
-                </attribute>
-                <attribute name="decoration-warning">account_class ==
-                    'change'
-                </attribute>
                 <attribute name="default_order">complete_wbs_code</attribute>
             </xpath>
             <xpath expr='//field[@name="sequence"]' position="after">
@@ -152,14 +143,15 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
                         name="action_open_view_project_form"
                         type="object"
                         icon="fa-pencil-square-o"/>
-                <field name="complete_wbs_code" string="Code"/>
+                <field name="complete_wbs_code" string="WBS Code"/>
                 <field name="wbs_indent"/>
             </xpath>
             <xpath expr='//field[@name="sequence"]' position="attributes">
                 <attribute name="invisible">1</attribute>
             </xpath>
             <xpath expr='//field[@name="name"]' position="after">
-                <field name="parent_id" string="Parent" invisible="1"/>
+                <field name="code" string="Element Code"/>
+                <field name="parent_id" string="Parent" invisible="0"/>
                 <field name="account_class" string="Class"/>
                 <field name="child_ids" invisible="True"/>
             </xpath>
@@ -282,17 +274,19 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
             <xpath expr='//group[@name="misc"]' position="inside">
                 <group string="References">
-                    <field name="analytic_account_id"
-                           string="Element's account"
-                           readonly="1"
-                           required="0"/>
-                    <field name="project_analytic_id"
-                           domain="[('account_class', '=', 'project')]"/>
-                    <field name="code"
-                           string="Code"/>
-                    <field name="complete_wbs_code"
-                           string="WBS code"
-                           readonly="1"/>
+                    <group name="references">
+                        <field name="analytic_account_id"
+                               string="Element's account"
+                               readonly="1"
+                               required="0"/>
+                        <field name="project_analytic_id"
+                               domain="[('account_class', '=', 'project')]"/>
+                        <field name="code"
+                               string="Element Code"/>
+                        <field name="complete_wbs_code"
+                               string="WBS code"
+                               readonly="1"/>
+                    </group>
                 </group>
             </xpath>
             <!--RELATED TO STATE BUTTONS AND STATE CHANGE TRACKING-->
@@ -371,7 +365,7 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
                         <group name="button">
                             <button name="%(create_wbs_element)d"
                                     string="Create child WBS element"
-                                    type="action"
+                                    type="action" class="oe_highlight"
                                     context="{
                               'default_parent_id':analytic_account_id,
                               'default_partner_id':partner_id,
@@ -381,45 +375,39 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
                               }"/>
                         </group>
                         <field name="project_child_complete_ids"
-                               widget="one2many_list" nolabel="1">
-                            <tree string="WBS"
-                                  decoration-info="account_class in 'deliverable, phase'"
-                                  decoration-it="account_class == 'work_package'"
-                                  decoration-warning="account_class == 'change'"
-                                  decoration-muted="active == False"
-                                  default_order="complete_wbs_code">
-                                <field name="complete_wbs_code"
-                                       string="Code"/>
-                                <field name="message_needaction"
-                                       invisible="1"/>
-                                <field name="active"
-                                       invisible="1"/>
-                                <field name="account_class"
-                                       string="Class"/>
-                                <field name="name" string=" Name"/>
-                                <field name="user_id"
-                                       string="Project Manager"/>
-                                <field name="parent_id"
-                                       string="Parent"
-                                       invisible="1"/>
-                                <button string="Child WBS elements"
-                                        name="action_open_child_tree_view"
-                                        type="object"
-                                        icon="fa-arrow-down"/>
-                                <field name="project_child_complete_ids"
-                                       widget="many2many_tags"
-                                       string="WBS"/>
-                                <field name="state" readonly="1"/>
-                            </tree>
-                        </field>
+                               widget="one2many_list" nolabel="1"/>
                     </page>
                     <page string="Changes"
                           attrs="{'invisible':[('account_class','=','change')]}">
+                        <group name="button">
+                            <button name="%(create_wbs_element)d"
+                                    string="Request Change"
+                                    type="action" class="oe_highlight"
+                                    context="{
+                              'default_parent_id':analytic_account_id,
+                              'default_partner_id':partner_id,
+                              'default_user_id':user_id,
+                              'default_use_tasks':use_tasks,
+                              'default_account_class':'change'
+                              }"/>
+                        </group>
                         <field name="change_ids" widget="one2many_list"
                                nolabel="1"/>
                     </page>
                     <page string="Risks"
                           attrs="{'invisible':[('account_class','=','risk')]}">
+                        <group name="button">
+                            <button name="%(project.open_create_project)d"
+                                    string="Register Risk"
+                                    type="action" class="oe_highlight"
+                                    context="{
+                              'default_parent_id':analytic_account_id,
+                              'default_partner_id':partner_id,
+                              'default_user_id':user_id,
+                              'default_use_tasks':use_tasks,
+                              'default_account_class':'risk'
+                              }"/>
+                        </group>
                         <field name="risk_ids" widget="one2many_list"
                                nolabel="1"/>
                     </page>
@@ -428,7 +416,6 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
             </xpath>
         </field>
     </record>
-
     <!--SIMPLIFIED FORM VIEW-->
     <record id="project_project_view_form_simplified" model="ir.ui.view">
         <field name="name">project.project.view.form.simplified</field>
@@ -442,7 +429,8 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
                        string="Parent Analytic Account"
                        help="Append this project to another one using analytic accounts hierarchy"
                        domain="[('id','!=',analytic_account_id)]"
-                       context="{'current_model': 'project.project'}"/>
+                       context="{'current_model': 'project.project'}"
+                       invisible="1"/>
             </xpath>
 
             <xpath expr='//field[@name="name"]' position="after">
@@ -510,18 +498,13 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
         <field name="model">project.project</field>
         <field name="priority">30</field>
         <field name="arch" type="xml">
-            <tree string='WBS elements'
-                  decoration-bf="message_needaction==True"
-                  decoration-muted="active == False"
-                  decoration-info="account_class in 'deliverable, phase'"
-                  decoration-it="account_class == 'work_package'"
-                  decoration-warning="account_class == 'change'"
-                  default_order="complete_wbs_code">
+            <tree string='WBS elements'>
                 <field name="complete_wbs_code" string="Code"/>
                 <field name="message_needaction" invisible="1"/>
                 <field name="active" invisible="1"/>
                 <field name="account_class" string="Class"/>
                 <field name="name" string="WBS Name"/>
+                <field name="code" string="Element Code"/>
                 <field name="parent_id" string="Parent"/>
                 <field name="user_id" string="Responsible"/>
                 <field name="date_start" string="Start Date"/>
@@ -564,8 +547,8 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
         <field name="name">WBS elements</field>
         <field name="res_model">project.project</field>
         <field name="view_type">form</field>
-        <field name="domain">[('account_class','not in',
-            ['project', 'change'])]
+        <field name="domain">[('account_class','in',
+            ['deliverable', 'work_package', 'phase'])]
         </field>
         <field name="view_mode">kanban,tree,form</field>
         <field name="view_id" ref="element_tree_view"/>
