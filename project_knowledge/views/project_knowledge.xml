@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!--DOC. REFERENCE ON PROJECT-->
+    <record id="edit_project_document" model="ir.ui.view">
+        <field name="name">project.project.form.document</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project_wbs.edit_project"/>
+        <field name="arch" type="xml">
+            <page name="scope" position="before" >
+                <page string="Knowledge">
+                    <field name="page_ids"
+                           domain="[('type','=','content')]"
+                           context="{'default_type': 'content'}"
+                           nolabel="1"/>
+                </page>
+            </page>
+        </field>
+    </record>
+    <!--DOC. TRACK ON TASK-->
+    <record id="view_task_form_wiki" model="ir.ui.view">
+        <field name="name">project.task.form.wiki</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2"/>
+        <field name="arch" type="xml">
+            <page name="extra_info" position="after">
+                <page string="Knowledge">
+                    <field name="page_ids"
+                           domain="[('type','=','content')]"
+                           context="{'default_type': 'content'}"
+                           nolabel="1"/>/>
+                </page>
+            </page>
+        </field>
+    </record>
+    <!--PROJECT AND TASK REFERENCE ON DOCUMENT-->
+    <record id="view_wiki_form" model="ir.ui.view">
+        <field name="name">document.page.form</field>
+        <field name="model">document.page</field>
+        <field name="inherit_id" ref="document_page.view_wiki_form"/>
+        <field name="arch" type="xml">
+            <page name="history" position="after" >
+                <page string="WBS references">
+                    <field name="project_ids" nolabel="1"/>
+                    <field name="task_ids" nolabel="1"/>
+                </page>
+            </page>
+        </field>
+    </record>
+    <!--SEARCH DOCUMENT BY PROJECT AND TASK REFERENCE-->
+    <record id="view_wiki_filter" model="ir.ui.view">
+        <field name="name">document.page.search</field>
+        <field name="model">document.page</field>
+        <field name="inherit_id" ref="document_page.view_wiki_filter"/>
+        <field name="arch" type="xml">
+            <field name="content_uid" position="after" >
+                <field name="project_ids" nolabel="1"/>
+                <field name="task_ids" nolabel="1"/>
+            </field>
+        </field>
+    </record>
+    <!--DOCUMENT LIST VIEW WITH PROJECT AND TASK REFERENCE-->
+    <record id="view_wiki_tree" model="ir.ui.view">
+        <field name="name">document.page.list</field>
+        <field name="model">document.page</field>
+        <field name="inherit_id" ref="document_page.view_wiki_tree"/>
+        <field name="arch" type="xml">
+            <field name="content_date" position="after" >
+                <field name="project_ids" nolabel="1"/>
+                <field name="task_ids" nolabel="1"/>
+            </field>
+        </field>
+    </record>
+
+    <menuitem id="project_knowledge"
+              name="Project Knowledge"
+              parent="project.menu_main_pm"
+              groups="project.group_project_user"
+              sequence="4"/>
+
+    <!--<menuitem id="menu_project_knowledge_manuals" name="Requirements"
+              action="action_requirements"
+              parent="project_knowledge.project_knowledge"
+              sequence="1" groups="project.group_project_user"/>-->
+</odoo>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!--<record model="document.page" id="document_page_group_requirement">
+        <field name="name">Requirement</field>
+        <field name="type">category</field>
+        <field name="template"><![CDATA[
+<h1>Requirement Description</h1>
+]]>
+        </field>
+    </record>-->
+</odoo>

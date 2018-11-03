@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <menuitem id="menu_project_knowledge_categories"
+              name="Categories"
+              action="document_page.action_category"
+              parent="project_knowledge.project_knowledge"
+              sequence="20"
+              groups="project.group_project_manager"/>
+</odoo>
