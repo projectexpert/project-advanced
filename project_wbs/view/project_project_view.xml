@@ -383,59 +383,69 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
             <!--END STATE CHANGE TRACKING INSERTION-->
             <!--OTHER NOTEBOOK INSERTIONS-->
             <xpath expr="//notebook/page[1]" position="after">
-                <page name="scope" string="Scope">
-                    <notebook name="scope">
-                    <page string="WBS elements" name="wbs">
-                        <group name="button">
-                            <button name="%(create_wbs_element)d"
-                                    string="Create child WBS element"
-                                    type="action" class="oe_highlight"
-                                    context="{
-                              'default_parent_id':analytic_account_id,
-                              'default_partner_id':partner_id,
-                              'default_user_id':user_id,
-                              'default_use_tasks':use_tasks,
-                              'default_account_class':'work_package'
-                              }"/>
-                        </group>
-                        <field name="project_child_complete_ids"
-                               widget="one2many_list" nolabel="1"/>
-                    </page>
-                    <page string="Changes"
-                          attrs="{'invisible':[('account_class','=','change')]}">
-                        <group name="button">
-                            <button name="%(create_wbs_element)d"
-                                    string="Request Change"
-                                    type="action" class="oe_highlight"
-                                    context="{
-                              'default_parent_id':analytic_account_id,
-                              'default_partner_id':partner_id,
-                              'default_user_id':user_id,
-                              'default_use_tasks':use_tasks,
-                              'default_account_class':'change'
-                              }"/>
-                        </group>
-                        <field name="change_ids" widget="one2many_list"
-                               nolabel="1"/>
-                    </page>
-                    <page string="Risks"
-                          attrs="{'invisible':[('account_class','=','risk')]}">
-                        <group name="button">
-                            <button name="%(project.open_create_project)d"
-                                    string="Register Risk"
-                                    type="action" class="oe_highlight"
-                                    context="{
-                              'default_parent_id':analytic_account_id,
-                              'default_partner_id':partner_id,
-                              'default_user_id':user_id,
-                              'default_use_tasks':use_tasks,
-                              'default_account_class':'risk'
-                              }"/>
-                        </group>
-                        <field name="risk_ids" widget="one2many_list"
-                               nolabel="1"/>
-                    </page>
+                <page name="processes" string="Processess">
+                    <!--PROCESSES GROUP TO MAKE SPACE FOR THE NEXT MODULES-->
+                    <notebook name="processes">
+                        <page name="scope" string="Scope">
+                        <!--SCOPE PROCESS GROUP-->
+                            <notebook name="scope">
+                            <!--TAB WBS ELEMENTS-->
+                            <page string="WBS elements" name="wbs">
+                                <group name="button">
+                                    <button name="%(create_wbs_element)d"
+                                            string="Create child WBS element"
+                                            type="action" class="oe_highlight"
+                                            context="{
+                                      'default_parent_id':analytic_account_id,
+                                      'default_partner_id':partner_id,
+                                      'default_user_id':user_id,
+                                      'default_use_tasks':use_tasks,
+                                      'default_account_class':'work_package'
+                                      }"/>
+                                </group>
+                                <field name="project_child_complete_ids"
+                                       widget="one2many_list" nolabel="1"/>
+                            </page>
+                            <page string="Changes"
+                                  attrs="{'invisible':[('account_class','=','change')]}">
+                                <group name="button">
+                                    <button name="%(create_wbs_element)d"
+                                            string="Request Change"
+                                            type="action" class="oe_highlight"
+                                            context="{
+                                      'default_parent_id':analytic_account_id,
+                                      'default_partner_id':partner_id,
+                                      'default_user_id':user_id,
+                                      'default_use_tasks':use_tasks,
+                                      'default_account_class':'change'
+                                      }"/>
+                                </group>
+                                <field name="change_ids" widget="one2many_list"
+                                       nolabel="1"/>
+                            </page>
+                            <page string="Risks"
+                                  attrs="{'invisible':[('account_class','=','risk')]}">
+                                <group name="button">
+                                    <button name="%(project.open_create_project)d"
+                                            string="Register Risk"
+                                            type="action" class="oe_highlight"
+                                            context="{
+                                      'default_parent_id':analytic_account_id,
+                                      'default_partner_id':partner_id,
+                                      'default_user_id':user_id,
+                                      'default_use_tasks':use_tasks,
+                                      'default_account_class':'risk'
+                                      }"/>
+                                </group>
+                                <field name="risk_ids" widget="one2many_list"
+                                       nolabel="1"/>
+                            </page>
+                            <!--TAB-->
+                            </notebook>
+                            <!--SCOPE-->
+                        </page>
                     </notebook>
+                    <!--PROCESSES-->
                 </page>
             </xpath>
         </field>
