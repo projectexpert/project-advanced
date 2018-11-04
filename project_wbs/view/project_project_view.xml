@@ -75,6 +75,7 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
                 <field name="wbs_count"/>
                 <field name="change_count"/>
                 <field name="risk_count"/>
+                <field name="requirement_count"/>
             </field>
             <xpath expr="//div[contains(@class, 'o_project_kanban_box')]/div[1]"
                    position="before">
@@ -87,6 +88,18 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
                                 <t t-esc="record.wbs_count.value"/>
                             </span>
                             <span class="o_label">Elements</span>
+                        </div>
+                    </a>
+                </div>
+                <div t-if="record.requirement_count.raw_value"
+                     class="o_project_kanban_box">
+                    <a name="action_open_child_kanban_view"
+                       type="object">
+                        <div class="wbselements">
+                            <span class="o_value">
+                                <t t-esc="record.requirement_count.value"/>
+                            </span>
+                            <span class="o_label">Requirements</span>
                         </div>
                     </a>
                 </div>
@@ -132,6 +145,8 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
                 <field name="user_id" string="Responsible"/>
                 <field name="account_class" string="Class"/>
                 <field name="project_child_complete_ids" string="WBS Elements"/>
+                <field name="requirement_ids"
+                       string="Requirements"/>
                 <field name="change_ids"
                        string="Changes"/>
                 <field name="risk_ids"
@@ -390,21 +405,22 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
                         <!--SCOPE PROCESS GROUP-->
                             <notebook name="scope">
                             <!--TAB WBS ELEMENTS-->
-                            <page string="WBS elements" name="wbs">
+                             <page string="Requirements"
+                                  attrs="{'invisible':[('account_class','=','requirement')]}">
                                 <group name="button">
-                                    <button name="%(create_wbs_element)d"
-                                            string="Create child WBS element"
+                                    <button name="%(project.open_create_project)d"
+                                            string="Define Requirement"
                                             type="action" class="oe_highlight"
                                             context="{
                                       'default_parent_id':analytic_account_id,
                                       'default_partner_id':partner_id,
                                       'default_user_id':user_id,
                                       'default_use_tasks':use_tasks,
-                                      'default_account_class':'work_package'
+                                      'default_account_class':'requirement'
                                       }"/>
                                 </group>
-                                <field name="project_child_complete_ids"
-                                       widget="one2many_list" nolabel="1"/>
+                                <field name="requirement_ids" widget="one2many_list"
+                                       nolabel="1"/>
                             </page>
                             <page string="Changes"
                                   attrs="{'invisible':[('account_class','=','change')]}">
@@ -440,6 +456,22 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
                                 <field name="risk_ids" widget="one2many_list"
                                        nolabel="1"/>
                             </page>
+                            <page string="WBS elements" name="wbs">
+                                <group name="button">
+                                    <button name="%(create_wbs_element)d"
+                                            string="Create child WBS element"
+                                            type="action" class="oe_highlight"
+                                            context="{
+                                      'default_parent_id':analytic_account_id,
+                                      'default_partner_id':partner_id,
+                                      'default_user_id':user_id,
+                                      'default_use_tasks':use_tasks,
+                                      'default_account_class':'work_package'
+                                      }"/>
+                                </group>
+                                <field name="project_child_complete_ids"
+                                       widget="one2many_list" nolabel="1"/>
+                            </page>
                             <!--TAB-->
                             </notebook>
                             <!--SCOPE-->
@@ -451,7 +483,7 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
         </field>
     </record>
     <!--@TODO: hide the Scope page when state in draft,proposal-->
-    <!--@TODO: custom simplified forms for change and risk-->
+    <!--@TODO: custom simplified forms for changes, risks and requirements-->
     <!--@TODO: pages in notepad visible by state and/or class-->
     <!--SIMPLIFIED FORM VIEW-->
     <record id="project_project_view_form_simplified" model="ir.ui.view">
@@ -648,6 +680,24 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
         </field>
     </record>
 
+    <!--
+    MENU REQUIREMENTS
+    called by menuitem action="group_requirements"
+    -->
+    <record id="group_requirements" model="ir.actions.act_window">
+        <field name="name">Requirements</field>
+        <field name="res_model">project.project</field>
+        <field name="view_type">form</field>
+        <field name="domain">[('account_class','in',['requirement'])]</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="view_id" ref="element_tree_view"/>
+        <field name="search_view_id"
+               ref="project.view_project_project_filter"/>
+        <field name="context">
+            {'search_default_Current': 1, 'default_account_class':'requirement'}
+        </field>
+    </record>
+
     <menuitem action="group_project"
               id="menu_project_wbs_project"
               name="Projects"
@@ -674,7 +724,12 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
               parent="project.menu_project_management"
               groups="project.group_project_manager,project.group_project_user"
               sequence="60"/>
-
+    <menuitem action="group_requirements"
+              id="menu_project_requirements"
+              name="Requirements"
+              parent="project.menu_project_management"
+              groups="project.group_project_manager,project.group_project_user"
+              sequence="60"/>
     <menuitem action="group_wbs_elements"
               id="menu_project_wbs_elements"
               name="WBS Elements"

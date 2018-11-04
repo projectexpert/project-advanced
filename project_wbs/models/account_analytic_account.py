@@ -175,6 +175,7 @@ class AccountAnalyticAccount(models.Model):
             ('phase', 'Phase'),
             ('deliverable', 'Deliverable'),
             ('work_package', 'Work Package'),
+            ('requirement', 'Requirement'),
             ('change', 'Change'),
             ('risk', 'Risk')
         ],

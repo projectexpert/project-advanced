@@ -18,9 +18,12 @@ Planning workflow as per PMBOK and ISO 21500.
 The target is to be able to manage projects with different methodologies
 as a hybrid (waterfall, iterative, agile) framework.
 
-# MAIN CONCEPT
+## MAIN CONCEPT
 Picture will be updated as the concept developes:
-![Concept](https://cloud.luxim.si/index.php/apps/files_sharing/ajax/publicpreview.php?x=1920&y=587&a=true&file=IDEA-MANAGEMENT.png&t=aw7S4PGZmRzqJSn&scalingup=0)
+![Concept](https://cloud.luxim.si/index.php/s/aw7S4PGZmRzqJSn/preview)
+
+## IDEA
+![Concept](https://cloud.luxim.si/index.php/s/FCjNK4wo7eC9LfS/preview)
 
 
 Maintainer
@@ -35,7 +38,7 @@ Project Expert is a joint effort between EFICENT (Barcelona, Spain) and MATMOZ
 Since 2017 the development team was joined by LUXIM (Nova Gorica, Slovenia)
 after MATMOZ and LUXIM began the company merging process.
 
-[![Odoo Community Association](https://www.luxim.si/wp-content/uploads/2017/12/odoo_oca_128.png)](http://odoo-community.org)
+[![Odoo Community Association](https://odoo-community.org/logo.png)](http://odoo-community.org)
 
 OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and

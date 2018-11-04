@@ -161,7 +161,7 @@ class Project(models.Model):
                 [
                     ('parent_id', '=', project_item.analytic_account_id.id),
                     ('account_class', 'not in', [
-                        'change', 'risk'])
+                        'change', 'risk', 'requirement'])
                 ]
             )
             project_item.project_child_complete_ids = child_ids
@@ -191,6 +191,18 @@ class Project(models.Model):
             project_item.risk_ids = child_ids
 
     @api.multi
+    @api.depends('parent_id')
+    def _compute_child_requirements(self):
+        for project_item in self:
+            child_ids = self.search(
+                [
+                    ('parent_id', '=', project_item.analytic_account_id.id),
+                    ('account_class', '=', 'requirement')
+                ]
+            )
+            project_item.risk_ids = child_ids
+
+    @api.multi
     def _resolve_analytic_account_id_from_context(self):
         """
         Returns ID of parent analytic account based on the value of
@@ -209,6 +221,7 @@ class Project(models.Model):
             project.wbs_count = len(project.project_child_complete_ids)
             project.change_count = len(project.change_ids)
             project.risk_count = len(project.risk_ids)
+            project.requirement_count = len(project.requirement_ids)
 
     wbs_count = fields.Integer(
         compute='_compute_wbs_count',
@@ -299,6 +312,12 @@ class Project(models.Model):
         string='Changes',
         domain=[('account_class', '=', 'risk')]
     )
+    requirement_ids = fields.Many2many(
+        comodel_name='project.project',
+        compute="_compute_child_risks",
+        string='Changes',
+        domain=[('account_class', '=', 'requirement')]
+    )
     change_count = fields.Integer(
         compute='_compute_wbs_count',
         string="Changes"
@@ -306,6 +325,10 @@ class Project(models.Model):
     risk_count = fields.Integer(
         compute='_compute_wbs_count',
         string="Risks"
+    )
+    requirement_count = fields.Integer(
+        compute='_compute_wbs_count',
+        string="Requirements"
     )
 
     @api.multi

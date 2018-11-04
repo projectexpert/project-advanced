@@ -6,7 +6,7 @@
         <field name="model">project.project</field>
         <field name="inherit_id" ref="project_wbs.edit_project"/>
         <field name="arch" type="xml">
-            <page name="scope" position="before" >
+            <page name="scope" position="after" >
                 <page string="Knowledge">
                     <field name="page_ids"
                            domain="[('type','=','content')]"
