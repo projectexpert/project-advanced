@@ -160,8 +160,13 @@ class Project(models.Model):
             child_ids = self.search(
                 [
                     ('parent_id', '=', project_item.analytic_account_id.id),
-                    ('account_class', 'not in', [
-                        'change', 'risk', 'requirement'])
+                    # Commented out to allow all elements in WBS
+                    #
+                    # Otherwise custom hierarchies won't complete in the
+                    # hierarchy view
+                    #
+                    # ('account_class', 'not in', [
+                    #     'change', 'risk', 'requirement'])
                 ]
             )
             project_item.project_child_complete_ids = child_ids
