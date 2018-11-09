@@ -205,7 +205,7 @@ class Project(models.Model):
                     ('account_class', '=', 'requirement')
                 ]
             )
-            project_item.risk_ids = child_ids
+            project_item.requirement_ids = child_ids
 
     @api.multi
     def _resolve_analytic_account_id_from_context(self):
