@@ -172,7 +172,7 @@ class Project(models.Model):
             project_item.project_child_complete_ids = child_ids
 
     @api.multi
-    @api.depends('parent_id')
+    @api.depends('parent_id', 'account_class')
     def _compute_child_changes(self):
         for project_item in self:
             child_ids = self.search(
@@ -184,7 +184,7 @@ class Project(models.Model):
             project_item.change_ids = child_ids
 
     @api.multi
-    @api.depends('parent_id')
+    @api.depends('parent_id', 'account_class')
     def _compute_child_risks(self):
         for project_item in self:
             child_ids = self.search(
@@ -196,7 +196,7 @@ class Project(models.Model):
             project_item.risk_ids = child_ids
 
     @api.multi
-    @api.depends('parent_id')
+    @api.depends('parent_id', 'account_class')
     def _compute_child_requirements(self):
         for project_item in self:
             child_ids = self.search(
@@ -314,13 +314,13 @@ class Project(models.Model):
     risk_ids = fields.Many2many(
         comodel_name='project.project',
         compute="_compute_child_risks",
-        string='Changes',
+        string='Risks',
         domain=[('account_class', '=', 'risk')]
     )
     requirement_ids = fields.Many2many(
         comodel_name='project.project',
-        compute="_compute_child_risks",
-        string='Changes',
+        compute="_compute_child_requirements",
+        string='Requirements',
         domain=[('account_class', '=', 'requirement')]
     )
     change_count = fields.Integer(
