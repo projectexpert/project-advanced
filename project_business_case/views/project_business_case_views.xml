@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!--DOC. REFERENCE ON LEAD-->
+    <record id="crm_case_form_view_oppor" model="ir.ui.view">
+        <field name="name">crm.lead.form.opportunity</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
+        <field name="arch" type="xml">
+            <field name="user_id" position="before" >
+                <button name="button_create_project"
+                        string="Draft a Project Proposal"
+                        type="object"
+                        attrs="{'invisible': ['|',('lead_project_id', 'not in', False),]}"
+                        colspan="2"
+                        class="oe_highlight"
+                        context="{'project_lead_id': [active_id]}"/>
+                <separator colspan="2"/>
+                <field name="lead_project_id"
+                       attrs="{'invisible': [('lead_project_id', '=', False)]}"/>
+                <!--<field name="lead_project_id"/>-->
+                <!--<button name="button_create_document"-->
+                        <!--string="Create a Business Document"-->
+                        <!--type="object"-->
+                        <!--attrs="{'invisible': ['|',('lead_project_document_id', 'not in', False),]}"-->
+                        <!--colspan="2"-->
+                        <!--class="oe_highlight"-->
+                        <!--domain="[('type','=','content')]"-->
+                        <!--context="{'default_type': 'content'}"/>-->
+                <!--<separator colspan="2"/>-->
+                    <!--<field name="lead_project_document_id"-->
+                           <!--attrs="{'invisible': [('lead_project_document_id', '=', False)]}"/>-->
+            </field>
+        </field>
+    </record>
+    <!--PROJECT VIEW-->
+    <record id="edit_project" model="ir.ui.view">
+        <field name="name">project.project.form</field>
+        <field name="model">project.project</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="project_wbs.edit_project"/>
+        <field name="arch" type="xml">
+            <group name="references" position="after">
+                <group name="business" string="Business Document">
+                    <field name="project_lead_ids"
+                           widget="many2many"
+                           options="{
+                           'no_create': True,
+                           'no_quick_create': True,
+                           'no_create_edit': True
+                           }"
+                           readonly="1"
+                           nolabel="1"/>
+                </group>
+            </group>
+        </field>
+    </record>
+    <!--add near PROJECT AND TASK REFERENCE ON DOCUMENT-->
+    <!--<record id="view_wiki_form" model="ir.ui.view">
+        <field name="name">document.page.form</field>
+        <field name="model">document.page</field>
+        <field name="inherit_id" ref="document_page.view_wiki_form"/>
+        <field name="arch" type="xml">
+            <page name="refs" position="inside" >
+                <field name="business_case_id"/>
+            </page>
+        </field>
+    </record>-->
+    <!--SEARCH DOCUMENT BY PROJECT AND TASK REFERENCE-->
+    <!--<record id="view_wiki_filter" model="ir.ui.view">
+        <field name="name">document.page.search</field>
+        <field name="model">document.page</field>
+        <field name="inherit_id" ref="document_page.view_wiki_filter"/>
+        <field name="arch" type="xml">
+            <field name="content_uid" position="after" >
+                <field name="business_case_id"/>
+            </field>
+        </field>
+    </record>-->
+    <!--DOCUMENT LIST VIEW WITH PROJECT AND TASK REFERENCE-->
+    <!--<record id="view_wiki_tree" model="ir.ui.view">
+        <field name="name">document.page.list</field>
+        <field name="model">document.page</field>
+        <field name="inherit_id" ref="document_page.view_wiki_tree"/>
+        <field name="arch" type="xml">
+            <field name="content_date" position="after" >
+                <field name="business_case_id"/>
+            </field>
+        </field>
+    </record>-->
+    <!--<menuitem id="project_knowledge"
+              name="Project Knowledge"
+              parent="project.menu_main_pm"
+              groups="project.group_project_user"
+              sequence="4"/>-->
+
+    <!--<menuitem id="menu_project_knowledge_manuals" name="Requirements"
+              action="action_requirements"
+              parent="project_knowledge.project_knowledge"
+              sequence="1" groups="project.group_project_user"/>-->
+</odoo>

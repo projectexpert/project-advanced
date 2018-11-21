@@ -3,21 +3,21 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 {
-    "name": "Project Knowledge",
+    "name": "Analytic Program",
     "version": "10.0.1.0.0",
     "category": "Advanced Project Management",
     "license": "AGPL-3",
     "author": "Luxim, Odoo Community Association (OCA)",
     "website": "https://portal.pmisuite.com",
     "depends": [
-        'document_page',
-        'project_wbs',
+        'analytic',
+        'project',
+        'sales_team'
     ],
-    'summary': '',
+    'summary': 'Analytic Account for program management',
     "data": [
-        'data/project_knowledge_data.xml',
-        'views/project_knowledge.xml',
-        'views/document_page.xml',
+        'data/analytic_program_data.xml',
+        'views/analytic_program_views.xml',
     ],
     "demo": [],
     'installable': True,

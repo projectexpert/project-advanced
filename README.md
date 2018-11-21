@@ -15,8 +15,10 @@ center to manage all the activities for a project oriented company
 organization, following the most usual Project Management Initiation and 
 Planning workflow as per PMBOK and ISO 21500.
 
-The target is to be able to manage projects with different methodologies
-as a hybrid (waterfall, iterative, agile) framework.
+The target is being able to manage projects using different methodologies 
+as a hybrid (waterfall, iterative, agile) framework and to be able to manage 
+a composite organization through an organization wide WBS and in a multi 
+company environment... so quite a job to do (in our spare time).
 
 ## MAIN CONCEPT
 Picture will be updated as the concept developes:
@@ -25,6 +27,11 @@ Picture will be updated as the concept developes:
 ## IDEA
 ![Concept](https://cloud.luxim.si/index.php/s/FCjNK4wo7eC9LfS/preview)
 
+In the future the framework should reach:
+ - the standard for portfolio management
+ - the standard for program management
+ - starting point for organizational project management
+ 
 
 Maintainer
 ----------

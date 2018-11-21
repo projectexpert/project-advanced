@@ -2,18 +2,17 @@
    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
    :alt: License: AGPL-3
 
-=================
-Project Knowledge
-=================
+=====================
+Project Business Case
+=====================
 
-At this stage this module only adds references between projects and documents,
-and between tasks and documents, to be able to trace the connection between
-documents and WBS elements. In the future we plan to expand the functionality.
+Adds a button to create draft project (project proposal) from opportunity.
 
 Installation
 ============
 
-No installation required.
+This module depends on modules project_knowledge and CRM. Make sure to have
+them in your addons path.
 
 Configuration
 =============
@@ -22,6 +21,11 @@ No configuration required.
 
 Usage
 =====
+
+To use this module, you need to:
+
+* Open an opportunity form
+* Click the Create a Project button
 
 Known issues / Roadmap
 ======================

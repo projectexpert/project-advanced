@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!--Sale team reference on analytic form-->
+    <record id="view_account_analytic_account_form" model="ir.ui.view">
+        <field name="name">account.analytic.account.form</field>
+        <field name="model">account.analytic.account</field>
+        <field name="inherit_id"
+               ref="analytic.view_account_analytic_account_form"/>
+        <field name="arch" type="xml">
+            <field name="code" position="after">
+                <field name="account_sale_team_ids"
+                       widget="many2many_tags"
+                       readonly="1"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="crm_team_view_form" model="ir.ui.view">
+        <field name="name">crm.team.form</field>
+        <field name="model">crm.team</field>
+        <field name="inherit_id"
+               ref="sales_team.crm_team_view_form"/>
+            <field name="arch" type="xml">
+                <field name="user_id" position="before">
+                    <field name="analytic_id"/>
+                </field>
+            </field>
+    </record>
+</odoo>

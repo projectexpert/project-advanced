@@ -2,23 +2,28 @@
    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
    :alt: License: AGPL-3
 
-=================
-Project Knowledge
-=================
+============================
+Analytic Program Sales Teams
+============================
 
-At this stage this module only adds references between projects and documents,
-and between tasks and documents, to be able to trace the connection between
-documents and WBS elements. In the future we plan to expand the functionality.
+Adds analytic account to sales teams, adds sales teams on analytic account.
+This module will get further options in the future to provide a full program
+management framework. The concept takes the sale team as the main incoming
+mail dispatch center for a program. All the opportunities created in that team
+will have the option to create project proposals under (as children of)
+the program management analytic account.
 
 Installation
 ============
 
-No installation required.
+Make sure to have the dependencies in your addons path.
 
 Configuration
 =============
 
-No configuration required.
+Set the analytic accounts on Sales Teams. The business documents and projects
+created from opportunities will use these analytic accounts as parents of the
+newly created projects.
 
 Usage
 =====
