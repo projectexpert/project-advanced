@@ -31,6 +31,10 @@ class BusinessCase(models.Model):
         string='Proposed Project',
         readonly="True"
     )
+    account_id = fields.Many2one(
+        related='lead_project_id.analytic_account_id',
+        string='Project Account'
+    )
 
     # create project button
     @api.multi

@@ -12,6 +12,7 @@
     "depends": [
         'crm',
         'analytic_program',
+        'analytic_deliverable_plan',
         'project_wbs'
     ],
     'summary': '',
