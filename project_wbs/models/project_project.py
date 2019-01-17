@@ -160,52 +160,9 @@ class Project(models.Model):
             child_ids = self.search(
                 [
                     ('parent_id', '=', project_item.analytic_account_id.id),
-                    # Commented out to allow all elements in WBS
-                    #
-                    # Otherwise custom hierarchies won't complete in the
-                    # hierarchy view
-                    #
-                    # ('account_class', 'not in', [
-                    #     'change', 'risk', 'requirement'])
                 ]
             )
             project_item.project_child_complete_ids = child_ids
-
-    @api.multi
-    @api.depends('parent_id', 'account_class')
-    def _compute_child_changes(self):
-        for project_item in self:
-            child_ids = self.search(
-                [
-                    ('parent_id', '=', project_item.analytic_account_id.id),
-                    ('account_class', '=', 'change')
-                ]
-            )
-            project_item.change_ids = child_ids
-
-    @api.multi
-    @api.depends('parent_id', 'account_class')
-    def _compute_child_risks(self):
-        for project_item in self:
-            child_ids = self.search(
-                [
-                    ('parent_id', '=', project_item.analytic_account_id.id),
-                    ('account_class', '=', 'risk')
-                ]
-            )
-            project_item.risk_ids = child_ids
-
-    @api.multi
-    @api.depends('parent_id', 'account_class')
-    def _compute_child_requirements(self):
-        for project_item in self:
-            child_ids = self.search(
-                [
-                    ('parent_id', '=', project_item.analytic_account_id.id),
-                    ('account_class', '=', 'requirement')
-                ]
-            )
-            project_item.requirement_ids = child_ids
 
     @api.multi
     def _resolve_analytic_account_id_from_context(self):
@@ -224,9 +181,6 @@ class Project(models.Model):
     def _compute_wbs_count(self):
         for project in self:
             project.wbs_count = len(project.project_child_complete_ids)
-            project.change_count = len(project.change_ids)
-            project.risk_count = len(project.risk_ids)
-            project.requirement_count = len(project.requirement_ids)
 
     wbs_count = fields.Integer(
         compute='_compute_wbs_count',
@@ -302,38 +256,6 @@ class Project(models.Model):
         string='Approved by',
         readonly=True,
         help="The person that approved the change. Auto populated."
-    )
-    # RISK AND CHANGES
-    change_ids = fields.Many2many(
-        comodel_name='project.project',
-        compute="_compute_child_changes",
-        string='Changes',
-        domain=[('account_class', '=', 'change')]
-    )
-
-    risk_ids = fields.Many2many(
-        comodel_name='project.project',
-        compute="_compute_child_risks",
-        string='Risks',
-        domain=[('account_class', '=', 'risk')]
-    )
-    requirement_ids = fields.Many2many(
-        comodel_name='project.project',
-        compute="_compute_child_requirements",
-        string='Requirements',
-        domain=[('account_class', '=', 'requirement')]
-    )
-    change_count = fields.Integer(
-        compute='_compute_wbs_count',
-        string="Changes"
-    )
-    risk_count = fields.Integer(
-        compute='_compute_wbs_count',
-        string="Risks"
-    )
-    requirement_count = fields.Integer(
-        compute='_compute_wbs_count',
-        string="Requirements"
     )
 
     @api.multi

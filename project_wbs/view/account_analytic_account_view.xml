@@ -15,9 +15,6 @@
                 <attribute name="decoration-it">account_class ==
                     'work_package'
                 </attribute>
-                <attribute name="decoration-warning">account_class ==
-                    'change'
-                </attribute>
                 <attribute name="default_order">complete_wbs_code</attribute>
             </xpath>
             <field name="code" position="attributes">

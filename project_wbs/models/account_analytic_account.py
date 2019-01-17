@@ -175,9 +175,6 @@ class AccountAnalyticAccount(models.Model):
             ('phase', 'Phase'),
             ('deliverable', 'Deliverable'),
             ('work_package', 'Work Package'),
-            ('requirement', 'Requirement'),
-            ('change', 'Change'),
-            ('risk', 'Risk')
         ],
         string='Class',
         help='The classification allows you to create a proper project '
